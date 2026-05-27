@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AnaVoliMilovana 💕</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Lato:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --rose: #e8637a;
+    --rose-light: #f4a0b0;
+    --rose-dark: #c0415a;
+    --teal: #4ec9b0;
+    --teal-dark: #2da891;
+    --bg-dark: #0d0a14;
+    --bg-mid: #1a0f22;
+    --text-soft: #f7e8ec;
+    --text-muted: #c9a8b4;
+  }
+
+  html, body {
+    width: 100%; height: 100%;
+    background: var(--bg-dark);
+    color: var(--text-soft);
+    font-family: 'Lato', sans-serif;
+    overflow: hidden;
+  }
+
+  /* ── CANVAS BG ── */
+  #bg-canvas {
+    position: fixed; inset: 0;
+    pointer-events: none; z-index: 0;
+  }
+
+  /* ── PAGES ── */
+  .page {
+    position: fixed; inset: 0;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    padding: 2rem;
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.7s ease, transform 0.7s ease;
+    transform: scale(0.96);
+    z-index: 10;
+    text-align: center;
+  }
+  .page.active {
+    opacity: 1; pointer-events: all; transform: scale(1);
+  }
+  .page.out {
+    opacity: 0; transform: scale(1.04); pointer-events: none;
+  }
+
+  /* ── TYPOGRAPHY ── */
+  h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.8rem, 5vw, 3rem);
+    color: var(--text-soft);
+    line-height: 1.25;
+    margin-bottom: 1rem;
+    text-shadow: 0 0 30px rgba(232,99,122,0.4);
+  }
+  h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.3rem, 3.5vw, 2rem);
+    color: var(--rose-light);
+    margin-bottom: 0.5rem;
+  }
+  p {
+    color: var(--text-muted);
+    font-size: clamp(0.9rem, 2.5vw, 1.1rem);
+    line-height: 1.7;
+    margin-bottom: 1rem;
+    font-weight: 300;
+  }
+
+  /* ── BUTTONS ── */
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 14px 36px;
+    border-radius: 50px;
+    border: none; cursor: pointer;
+    font-family: 'Lato', sans-serif;
+    font-size: 1rem; font-weight: 400;
+    letter-spacing: 0.5px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s;
+    position: relative;
+    text-decoration: none;
+  }
+  .btn-yes {
+    background: linear-gradient(135deg, var(--rose), var(--rose-dark));
+    color: white;
+    box-shadow: 0 4px 24px rgba(232,99,122,0.5);
+  }
+  .btn-yes:hover {
+    transform: translateY(-2px) scale(1.04);
+    box-shadow: 0 8px 36px rgba(232,99,122,0.7);
+  }
+  .btn-no {
+    background: transparent;
+    color: var(--text-muted);
+    border: 1px solid rgba(201,168,180,0.3);
+  }
+  .btn-no:hover { background: rgba(255,255,255,0.04); }
+
+  .btn-soft {
+    background: rgba(232,99,122,0.15);
+    color: var(--rose-light);
+    border: 1px solid rgba(232,99,122,0.3);
+  }
+  .btn-soft:hover {
+    background: rgba(232,99,122,0.28);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 20px rgba(232,99,122,0.3);
+  }
+
+  .btn-teal {
+    background: linear-gradient(135deg, var(--teal), var(--teal-dark));
+    color: #0d1a18;
+    box-shadow: 0 4px 20px rgba(78,201,176,0.4);
+  }
+  .btn-teal:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(78,201,176,0.55);
+  }
+
+  .btn-row {
+    display: flex; gap: 16px; flex-wrap: wrap;
+    justify-content: center; margin-top: 2rem;
+  }
+
+  /* ── FLOWER SVG ── */
+  #flower-wrap {
+    width: clamp(180px, 40vw, 280px);
+    height: clamp(180px, 40vw, 280px);
+    margin-bottom: 1.5rem;
+    filter: drop-shadow(0 0 20px rgba(232,99,122,0.35));
+    animation: floatFlower 4s ease-in-out infinite;
+  }
+  @keyframes floatFlower {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
+
+  /* ── PAGE 1 labels ── */
+  .flower-label {
+    position: absolute;
+    background: linear-gradient(135deg, var(--rose-dark), var(--rose));
+    color: white;
+    font-size: 0.78rem;
+    padding: 6px 14px;
+    border-radius: 20px;
+    white-space: nowrap;
+    box-shadow: 0 2px 12px rgba(232,99,122,0.4);
+    font-family: 'Lato', sans-serif;
+    animation: labelFloat 3s ease-in-out infinite;
+    pointer-events: none;
+  }
+  @keyframes labelFloat {
+    0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}
+  }
+
+  /* ── BIG EMOJI ── */
+  .big-emoji {
+    font-size: clamp(4rem, 15vw, 7rem);
+    animation: popIn 0.6s cubic-bezier(0.175,0.885,0.32,1.275);
+    margin-bottom: 1rem;
+  }
+  @keyframes popIn {
+    0%{transform:scale(0)}100%{transform:scale(1)}
+  }
+
+  /* ── ACTIVITY CARDS ── */
+  .activity-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    max-width: 420px;
+    width: 100%;
+    margin-top: 1.5rem;
+  }
+  @media(max-width:500px){ .activity-grid{ grid-template-columns: repeat(2,1fr); } }
+
+  .activity-card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(232,99,122,0.2);
+    border-radius: 16px;
+    padding: 18px 10px;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    display: flex; flex-direction: column;
+    align-items: center; gap: 8px;
+  }
+  .activity-card:hover {
+    background: rgba(232,99,122,0.12);
+    border-color: rgba(232,99,122,0.5);
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(232,99,122,0.2);
+  }
+  .activity-card .icon { font-size: 1.8rem; }
+  .activity-card .label {
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    font-weight: 300;
+    text-align: center;
+  }
+
+  /* ── DATE PICKER ── */
+  .date-wrap {
+    display: flex; flex-direction: column; gap: 16px;
+    align-items: center; margin-top: 1.5rem;
+    width: 100%; max-width: 320px;
+  }
+  .date-wrap input {
+    width: 100%;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(232,99,122,0.3);
+    border-radius: 12px;
+    color: var(--text-soft);
+    font-family: 'Lato', sans-serif;
+    font-size: 1rem;
+    padding: 14px 18px;
+    outline: none;
+    transition: border-color 0.2s;
+    color-scheme: dark;
+  }
+  .date-wrap input:focus { border-color: var(--rose); }
+  .date-wrap label {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    align-self: flex-start;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    font-weight: 300;
+  }
+
+  /* ── FINAL PAGE ── */
+  .final-messages {
+    display: flex; flex-direction: column; gap: 12px;
+    margin-top: 1.5rem;
+  }
+  .final-msg {
+    background: rgba(232,99,122,0.1);
+    border: 1px solid rgba(232,99,122,0.25);
+    border-radius: 20px;
+    padding: 14px 24px;
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: clamp(1rem, 2.5vw, 1.2rem);
+    color: var(--rose-light);
+    animation: slideUp 0.6s ease both;
+  }
+  .final-msg:nth-child(1){ animation-delay:0.1s }
+  .final-msg:nth-child(2){ animation-delay:0.35s }
+  .final-msg:nth-child(3){ animation-delay:0.6s }
+  @keyframes slideUp {
+    from{opacity:0;transform:translateY(20px)}
+    to{opacity:1;transform:translateY(0)}
+  }
+
+  /* ── CONFETTI LAYER ── */
+  #confetti-layer {
+    position: fixed; inset: 0; pointer-events: none; z-index: 5;
+  }
+
+  /* ── NO BUTTON shrink/YES grow ── */
+  #btn-no { transition: all 0.3s ease; }
+  #btn-yes { transition: all 0.3s ease; }
+</style>
+</head>
+<body>
+
+<canvas id="bg-canvas"></canvas>
+<canvas id="confetti-layer"></canvas>
+
+<!-- ═══════════════════════════════ PAGE 1 ═══════════════════════════════ -->
+<div class="page active" id="page-1">
+  <div style="position:relative; display:inline-block;">
+    <svg id="flower-wrap" viewBox="0 0 280 280" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <radialGradient id="glow" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#e8637a" stop-opacity="0.3"/>
+          <stop offset="100%" stop-color="#e8637a" stop-opacity="0"/>
+        </radialGradient>
+        <radialGradient id="petalG" cx="50%" cy="30%" r="70%">
+          <stop offset="0%" stop-color="#f4a0b0"/>
+          <stop offset="100%" stop-color="#e8637a"/>
+        </radialGradient>
+        <radialGradient id="centerG" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#ffd580"/>
+          <stop offset="100%" stop-color="#f4a040"/>
+        </radialGradient>
+        <radialGradient id="leafG" cx="30%" cy="30%" r="70%">
+          <stop offset="0%" stop-color="#5dd8c0"/>
+          <stop offset="100%" stop-color="#2da891"/>
+        </radialGradient>
+      </defs>
+
+      <!-- glow bg -->
+      <ellipse cx="140" cy="200" rx="90" ry="30" fill="url(#glow)" opacity="0.6"/>
+
+      <!-- stems -->
+      <path d="M140 260 Q138 220 135 180" stroke="#2da891" stroke-width="5" fill="none" stroke-linecap="round"/>
+      <path d="M140 260 Q150 225 158 190" stroke="#2da891" stroke-width="4.5" fill="none" stroke-linecap="round"/>
+      <path d="M140 260 Q128 230 120 200" stroke="#2da891" stroke-width="4" fill="none" stroke-linecap="round"/>
+
+      <!-- leaves -->
+      <ellipse cx="125" cy="230" rx="18" ry="9" fill="url(#leafG)" transform="rotate(-30 125 230)"/>
+      <ellipse cx="155" cy="235" rx="16" ry="8" fill="url(#leafG)" transform="rotate(25 155 235)"/>
+      <ellipse cx="112" cy="215" rx="14" ry="7" fill="url(#leafG)" transform="rotate(-45 112 215)"/>
+      <ellipse cx="162" cy="218" rx="13" ry="6" fill="url(#leafG)" transform="rotate(40 162 218)"/>
+
+      <!-- flower LEFT -->
+      <g transform="translate(120,200) rotate(-15)">
+        <ellipse cx="0" cy="-18" rx="9" ry="16" fill="url(#petalG)" opacity="0.95"/>
+        <ellipse cx="17" cy="-6" rx="9" ry="16" fill="url(#petalG)" opacity="0.95" transform="rotate(72)"/>
+        <ellipse cx="10" cy="16" rx="9" ry="16" fill="url(#petalG)" opacity="0.95" transform="rotate(144)"/>
+        <ellipse cx="-10" cy="16" rx="9" ry="16" fill="url(#petalG)" opacity="0.95" transform="rotate(216)"/>
+        <ellipse cx="-17" cy="-6" rx="9" ry="16" fill="url(#petalG)" opacity="0.95" transform="rotate(288)"/>
+        <circle cx="0" cy="0" r="11" fill="url(#centerG)"/>
+        <circle cx="0" cy="0" r="5" fill="#fff8e1" opacity="0.6"/>
+      </g>
+
+      <!-- flower CENTER (tallest) -->
+      <g transform="translate(140,170)">
+        <ellipse cx="0" cy="-20" rx="10" ry="18" fill="url(#petalG)" opacity="0.95"/>
+        <ellipse cx="19" cy="-7" rx="10" ry="18" fill="url(#petalG)" opacity="0.95" transform="rotate(72)"/>
+        <ellipse cx="12" cy="18" rx="10" ry="18" fill="url(#petalG)" opacity="0.95" transform="rotate(144)"/>
+        <ellipse cx="-12" cy="18" rx="10" ry="18" fill="url(#petalG)" opacity="0.95" transform="rotate(216)"/>
+        <ellipse cx="-19" cy="-7" rx="10" ry="18" fill="url(#petalG)" opacity="0.95" transform="rotate(288)"/>
+        <circle cx="0" cy="0" r="13" fill="url(#centerG)"/>
+        <circle cx="0" cy="0" r="6" fill="#fff8e1" opacity="0.6"/>
+      </g>
+
+      <!-- flower RIGHT -->
+      <g transform="translate(160,196) rotate(12)">
+        <ellipse cx="0" cy="-17" rx="9" ry="15" fill="url(#petalG)" opacity="0.95"/>
+        <ellipse cx="16" cy="-6" rx="9" ry="15" fill="url(#petalG)" opacity="0.95" transform="rotate(72)"/>
+        <ellipse cx="10" cy="14" rx="9" ry="15" fill="url(#petalG)" opacity="0.95" transform="rotate(144)"/>
+        <ellipse cx="-10" cy="14" rx="9" ry="15" fill="url(#petalG)" opacity="0.95" transform="rotate(216)"/>
+        <ellipse cx="-16" cy="-6" rx="9" ry="15" fill="url(#petalG)" opacity="0.95" transform="rotate(288)"/>
+        <circle cx="0" cy="0" r="10" fill="url(#centerG)"/>
+        <circle cx="0" cy="0" r="5" fill="#fff8e1" opacity="0.6"/>
+      </g>
+
+      <!-- sparkles -->
+      <g fill="#ffd580" opacity="0.85">
+        <polygon points="100,110 102,118 110,120 102,122 100,130 98,122 90,120 98,118" transform="scale(0.7) translate(50,-30)"/>
+        <polygon points="100,110 102,118 110,120 102,122 100,130 98,122 90,120 98,118" transform="scale(0.5) translate(200,-20)"/>
+        <polygon points="100,110 102,118 110,120 102,122 100,130 98,122 90,120 98,118" transform="scale(0.4) translate(120,-80)"/>
+      </g>
+    </svg>
+
+    <!-- floating labels around flower -->
+    <span class="flower-label" style="top:10%;left:-30%;animation-delay:0s">You are my favorite person 🌸</span>
+    <span class="flower-label" style="bottom:15%;left:-25%;animation-delay:1s">You make my world brighter 💫</span>
+    <span class="flower-label" style="bottom:20%;right:-22%;animation-delay:0.5s">Every flower reminds me of you 🌷</span>
+  </div>
+
+  <h1>Hoćeš li da izađeš sa mnom? 💕</h1>
+
+  <div class="btn-row">
+    <button class="btn btn-yes" id="btn-yes" onclick="yesClick()">Da, naravno! 💖</button>
+    <button class="btn btn-no" id="btn-no" onmouseover="noHover()" onclick="noClick()">Ne 💔</button>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════ PAGE 2 ═══════════════════════════════ -->
+<div class="page" id="page-2">
+  <div class="big-emoji" id="happy-emoji">🥰</div>
+  <h1>JEEEEEEEEEEEEEEEEJ!!!</h1>
+  <p>Znao sam da ćeš reći da! 🎉</p>
+  <div style="margin-top:2rem;">
+    <button class="btn btn-soft" onclick="goTo(3)">Dalje... ✨</button>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════ PAGE 3 ═══════════════════════════════ -->
+<div class="page" id="page-3">
+  <h2>Šta želiš da radimo? 🌙</h2>
+  <p>Izaberi jednu aktivnost</p>
+  <div class="activity-grid">
+    <div class="activity-card" onclick="pickActivity('Film 🎬')">
+      <span class="icon">🎬</span>
+      <span class="label">Film</span>
+    </div>
+    <div class="activity-card" onclick="pickActivity('Bioskop 🍿')">
+      <span class="icon">🍿</span>
+      <span class="label">Bioskop</span>
+    </div>
+    <div class="activity-card" onclick="pickActivity('Šetnja 🌙')">
+      <span class="icon">🌙</span>
+      <span class="label">Šetnja</span>
+    </div>
+    <div class="activity-card" onclick="pickActivity('Ja da odlučim 😏')">
+      <span class="icon">😏</span>
+      <span class="label">Ja da odlučim</span>
+    </div>
+    <div class="activity-card" onclick="pickActivity('Bilijar 🎱')">
+      <span class="icon">🎱</span>
+      <span class="label">Bilijar</span>
+    </div>
+    <div class="activity-card" onclick="pickActivity('DIY veče 🎨')">
+      <span class="icon">🎨</span>
+      <span class="label">DIY veče</span>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════ PAGE 4 ═══════════════════════════════ -->
+<div class="page" id="page-4">
+  <h2>Kada si slobodna? 📅</h2>
+  <p id="chosen-activity" style="color:var(--rose-light); font-style:italic;"></p>
+  <p>Izaberi datum i vreme</p>
+  <div class="date-wrap">
+    <div style="width:100%">
+      <label>Datum</label>
+      <input type="date" id="date-input" min="">
+    </div>
+    <div style="width:100%">
+      <label>Vreme</label>
+      <input type="time" id="time-input" value="19:00">
+    </div>
+    <button class="btn btn-yes" onclick="confirmDate()" style="width:100%; justify-content:center; margin-top:8px;">
+      Potvrdi 💕
+    </button>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════ PAGE 5 ═══════════════════════════════ -->
+<div class="page" id="page-5">
+  <h1>Dogovoreno! 💖</h1>
+  <p id="date-display" style="color:var(--rose-light); font-size:1.1rem; margin-bottom:0.5rem;"></p>
+  <div class="final-messages">
+    <div class="final-msg">Jedva čekam da se vidimo 💕</div>
+    <div class="final-msg">Fališ mi 🥺</div>
+    <div class="final-msg">Biće savršeno ✨</div>
+  </div>
+  <div style="margin-top:2rem;">
+    <button class="btn btn-soft" onclick="goTo(1)">Početak 🌷</button>
+  </div>
+</div>
+
+<script>
+// ── STATE ──
+let currentPage = 1;
+let noScale = 1.0, yesScale = 1.0;
+let noClickCount = 0;
+let selectedActivity = '';
+
+// ── NAVIGATION ──
+function goTo(n) {
+  const cur = document.getElementById('page-' + currentPage);
+  const next = document.getElementById('page-' + n);
+  cur.classList.add('out');
+  setTimeout(() => { cur.classList.remove('active', 'out'); }, 600);
+  setTimeout(() => { next.classList.add('active'); }, 300);
+  currentPage = n;
+}
+
+// ── PAGE 1 LOGIC ──
+function noHover() {
+  noScale = Math.max(0.4, noScale - 0.08);
+  yesScale = Math.min(1.5, yesScale + 0.06);
+  document.getElementById('btn-no').style.transform = `scale(${noScale})`;
+  document.getElementById('btn-no').style.opacity = noScale;
+  document.getElementById('btn-yes').style.transform = `scale(${yesScale})`;
+}
+
+function noClick() {
+  noClickCount++;
+  const msgs = ['Neeee 😅', 'Pokušaj ponovo 😊', 'Sigurno? 🥺', 'Molim te 💕', 'Ne postoji to dugme 😄'];
+  const btn = document.getElementById('btn-no');
+  btn.textContent = msgs[Math.min(noClickCount - 1, msgs.length - 1)];
+  noHover();
+}
+
+function yesClick() {
+  launchConfetti();
+  goTo(2);
+}
+
+// ── PAGE 3 LOGIC ──
+function pickActivity(act) {
+  selectedActivity = act;
+  document.getElementById('chosen-activity').textContent = '✨ ' + act;
+  goTo(4);
+}
+
+// ── PAGE 4 LOGIC ──
+(function setMinDate() {
+  const today = new Date().toISOString().split('T')[0];
+  document.getElementById('date-input').min = today;
+  document.getElementById('date-input').value = today;
+})();
+
+function confirmDate() {
+  const d = document.getElementById('date-input').value;
+  const t = document.getElementById('time-input').value;
+  if (!d) return;
+  const dateObj = new Date(d + 'T' + t);
+  const opts = { weekday:'long', year:'numeric', month:'long', day:'numeric' };
+  const dStr = dateObj.toLocaleDateString('sr-Latn-RS', opts);
+  document.getElementById('date-display').textContent =
+    selectedActivity + ' · ' + dStr + ' u ' + t + 'h';
+  launchConfetti();
+  goTo(5);
+}
+
+// ── BACKGROUND CANVAS (stars + hearts) ──
+const bgCanvas = document.getElementById('bg-canvas');
+const bgCtx = bgCanvas.getContext('2d');
+let stars = [], floatingHearts = [];
+
+function resizeBg() {
+  bgCanvas.width = window.innerWidth;
+  bgCanvas.height = window.innerHeight;
+  initStars();
+}
+
+function initStars() {
+  stars = [];
+  for (let i = 0; i < 160; i++) {
+    stars.push({
+      x: Math.random() * bgCanvas.width,
+      y: Math.random() * bgCanvas.height,
+      r: Math.random() * 1.5 + 0.3,
+      a: Math.random(),
+      speed: Math.random() * 0.003 + 0.001,
+      phase: Math.random() * Math.PI * 2
+    });
+  }
+  for (let i = 0; i < 18; i++) spawnHeart();
+}
+
+function spawnHeart() {
+  floatingHearts.push({
+    x: Math.random() * bgCanvas.width,
+    y: bgCanvas.height + 20,
+    size: Math.random() * 16 + 8,
+    speedY: Math.random() * 0.8 + 0.4,
+    speedX: (Math.random() - 0.5) * 0.5,
+    alpha: Math.random() * 0.4 + 0.15,
+    wobble: Math.random() * Math.PI * 2,
+    wobbleSpeed: Math.random() * 0.03 + 0.01
+  });
+}
+
+function drawHeart(ctx, x, y, size, alpha) {
+  ctx.save();
+  ctx.globalAlpha = alpha;
+  ctx.fillStyle = '#e8637a';
+  ctx.beginPath();
+  const s = size / 2;
+  ctx.moveTo(x, y + s * 0.4);
+  ctx.bezierCurveTo(x, y, x - s, y, x - s, y - s * 0.5);
+  ctx.bezierCurveTo(x - s, y - s * 1.2, x, y - s * 1.2, x, y - s * 0.5);
+  ctx.bezierCurveTo(x, y - s * 1.2, x + s, y - s * 1.2, x + s, y - s * 0.5);
+  ctx.bezierCurveTo(x + s, y, x, y, x, y + s * 0.4);
+  ctx.fill();
+  ctx.restore();
+}
+
+function bgLoop(t) {
+  bgCtx.clearRect(0, 0, bgCanvas.width, bgCanvas.height);
+
+  // gradient bg
+  const grad = bgCtx.createRadialGradient(
+    bgCanvas.width*0.5, bgCanvas.height*0.4, 0,
+    bgCanvas.width*0.5, bgCanvas.height*0.5, bgCanvas.width*0.8
+  );
+  grad.addColorStop(0, '#1a0f22');
+  grad.addColorStop(0.6, '#110918');
+  grad.addColorStop(1, '#0d0a14');
+  bgCtx.fillStyle = grad;
+  bgCtx.fillRect(0, 0, bgCanvas.width, bgCanvas.height);
+
+  // stars
+  stars.forEach(s => {
+    s.a = 0.3 + 0.7 * (0.5 + 0.5 * Math.sin(t * s.speed + s.phase));
+    bgCtx.save();
+    bgCtx.globalAlpha = s.a;
+    bgCtx.fillStyle = '#f7e8ec';
+    bgCtx.beginPath();
+    bgCtx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+    bgCtx.fill();
+    bgCtx.restore();
+  });
+
+  // hearts
+  floatingHearts.forEach((h, i) => {
+    h.y -= h.speedY;
+    h.wobble += h.wobbleSpeed;
+    h.x += Math.sin(h.wobble) * 0.4 + h.speedX;
+    drawHeart(bgCtx, h.x, h.y, h.size, h.alpha);
+    if (h.y < -30) {
+      floatingHearts[i] = {
+        x: Math.random() * bgCanvas.width,
+        y: bgCanvas.height + 20,
+        size: Math.random() * 16 + 8,
+        speedY: Math.random() * 0.8 + 0.4,
+        speedX: (Math.random() - 0.5) * 0.5,
+        alpha: Math.random() * 0.4 + 0.15,
+        wobble: Math.random() * Math.PI * 2,
+        wobbleSpeed: Math.random() * 0.03 + 0.01
+      };
+    }
+  });
+
+  requestAnimationFrame(bgLoop);
+}
+
+// ── CONFETTI ──
+const confCanvas = document.getElementById('confetti-layer');
+const confCtx = confCanvas.getContext('2d');
+let confParticles = [];
+let confActive = false;
+
+function launchConfetti() {
+  confCanvas.width = window.innerWidth;
+  confCanvas.height = window.innerHeight;
+  confParticles = [];
+  for (let i = 0; i < 120; i++) {
+    confParticles.push({
+      x: Math.random() * confCanvas.width,
+      y: -10,
+      vx: (Math.random() - 0.5) * 4,
+      vy: Math.random() * 4 + 2,
+      color: ['#e8637a','#f4a0b0','#4ec9b0','#ffd580','#c0415a','#ffffff'][Math.floor(Math.random()*6)],
+      size: Math.random() * 8 + 4,
+      rot: Math.random() * 360,
+      rotV: (Math.random()-0.5)*6
+    });
+  }
+  confActive = true;
+  animConf();
+}
+
+function animConf() {
+  if (!confActive) return;
+  confCtx.clearRect(0, 0, confCanvas.width, confCanvas.height);
+  let alive = 0;
+  confParticles.forEach(p => {
+    p.x += p.vx; p.y += p.vy; p.vy += 0.08; p.rot += p.rotV;
+    if (p.y < confCanvas.height + 20) {
+      alive++;
+      confCtx.save();
+      confCtx.translate(p.x, p.y);
+      confCtx.rotate(p.rot * Math.PI/180);
+      confCtx.fillStyle = p.color;
+      confCtx.globalAlpha = Math.max(0, 1 - p.y/confCanvas.height);
+      confCtx.fillRect(-p.size/2, -p.size/4, p.size, p.size/2);
+      confCtx.restore();
+    }
+  });
+  if (alive > 0) requestAnimationFrame(animConf);
+  else { confActive = false; confCtx.clearRect(0,0,confCanvas.width,confCanvas.height); }
+}
+
+// ── INIT ──
+window.addEventListener('resize', () => {
+  resizeBg();
+  confCanvas.width = window.innerWidth;
+  confCanvas.height = window.innerHeight;
+});
+
+resizeBg();
+requestAnimationFrame(bgLoop);
+</script>
+</body>
+</html>
