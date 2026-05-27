@@ -270,7 +270,7 @@ async function sendEmailNotification(activity, dateStr, time) {
   statusEl.textContent = '📧 Šaljem obaveštenje...';
   try {
     const formData = new FormData();
-    formData.append('access_key', '9cedd083-cf40-4eaf-901e-bd9a2d28c38b'); 
+    formData.append('access_key', 'TVOJ_WEB3FORMS_KLJUC'); // <- Zameni sa kljucem sa https://web3forms.com
     formData.append('to', 'masacorovic790@gmail.com');
     formData.append('subject', '💕 Neko je prihvatio tvoj poziv na dejt!');
     formData.append('message',
