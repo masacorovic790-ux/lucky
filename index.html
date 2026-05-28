@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-<title>Luckz 💖</title>
+<title>Lucky</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
 
@@ -305,7 +305,7 @@ p{
 
 <div class="page active" id="page-1">
 
-<h1>Da li želiš da se vidimo? 💕</h1>
+<h1>Da li želiš da se vidimo? </h1>
 
 <div class="btn-row">
 <button class="btn btn-yes" onclick="yesHandler()">Da! 🫶</button>
@@ -318,12 +318,11 @@ p{
 
 <div class="page" id="page-2">
 
-<h1>JEEEEJ!!! 🎀</h1>
+<h1>JEEEEJ!!!</h1>
 
-<p>Baš sam srećan 💖</p>
 
 <button class="btn btn-soft" style="margin-top:2rem;" onclick="goToPage(3)">
-Nastavimo →
+Znala sam da ćeš reći da...
 </button>
 
 </div>
@@ -332,13 +331,13 @@ Nastavimo →
 
 <div class="page" id="page-3">
 
-<h2>Šta želiš da radimo? ✨</h2>
+<h2>Šta želiš da radimo?</h2>
 
 <div class="activity-grid">
 
-<div class="activity-card" data-act="Bioskop 🍿" onclick="selectActivity(this)">
-<div class="icon">🍿</div>
-<div class="label">Bioskop</div>
+<div class="activity-card" data-act="DIY veče🎨" onclick="selectActivity(this)">
+<div class="icon">🎨</div>
+<div class="label">DIY veče</div>
 </div>
 
 <div class="activity-card" data-act="Večera 🍝" onclick="selectActivity(this)">
@@ -356,13 +355,13 @@ Nastavimo →
 <div class="label">Bilijar</div>
 </div>
 
-<div class="activity-card" data-act="Film marathon 🍿" onclick="selectActivity(this)">
+<div class="activity-card" data-act="Film 🍿" onclick="selectActivity(this)">
 <div class="icon">🎬</div>
 <div class="label">Film marathon</div>
 </div>
 
-<div class="activity-card" data-act="Iznenađenje 😏" onclick="selectActivity(this)">
-<div class="icon">😏</div>
+<div class="activity-card" data-act="Nešto drugo..." onclick="selectActivity(this)">
+<div class="icon">✅</div>
 <div class="label">Iznenađenje</div>
 </div>
 
@@ -408,12 +407,12 @@ Nastavimo →
 </div>
 
 <div class="custom-time-wrap">
-<label>ili unesi svoje vreme 💖</label>
+<label>ili unesi svoje vreme </label>
 <input type="time" id="time-input" value="19:00">
 </div>
 
 <button class="btn btn-yes confirm-btn" onclick="finalizeDate()">
-Potvrdi 💕
+Potvrdi 🙏🏻
 </button>
 
 </div>
@@ -426,14 +425,12 @@ Potvrdi 💕
 
 <div class="page" id="page-5">
 
-<h1>Dogovoreno! 💖</h1>
+<h1>Dogovoreno!</h1>
 
 <p id="date-display" style="margin-top:1rem;color:var(--rose-light);"></p>
 
 <div class="final-messages">
 <div class="final-msg">Jedva čekam da te vidim 🥰</div>
-<div class="final-msg">Biće prelepo 💕</div>
-<div class="final-msg">Do tada mi nedostaješ 🌹</div>
 </div>
 
 </div>
@@ -444,10 +441,10 @@ let currentIdx = 1;
 let selectedActivity = "Dejt 💖";
 
 const noMessages = [
-"Ne možeš pobeći 😅",
-"Ajde klikni DA 🥺",
+"Ne možeš pobeći ",
+"klikni DA ",
 "Sigurna? 😏",
-"To dugme ne radi 💕"
+"KLIKNI DA"
 ];
 
 let noCount = 0;
