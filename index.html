@@ -1,21 +1,12 @@
-
-
 <!DOCTYPE html>
 <html lang="sr">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 <title>Lucky</title>
-
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
-
 <style>
-*{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-  user-select:none;
-}
+*{margin:0;padding:0;box-sizing:border-box;user-select:none;}
 
 :root{
   --rose:#e8637a;
@@ -30,9 +21,8 @@
 body{
   background:var(--bg-deep);
   font-family:'Lato',sans-serif;
-  overflow-y:auto;
-  overflow-x:hidden;
-  height:100vh;
+  overflow:hidden;
+  height:100dvh;
   color:var(--text-glow);
 }
 
@@ -45,9 +35,7 @@ body{
   pointer-events:none;
 }
 
-#confetti-layer{
-  z-index:15;
-}
+#confetti-layer{z-index:15;}
 
 .page{
   position:fixed;
@@ -59,26 +47,27 @@ body{
   padding:1.8rem;
   opacity:0;
   pointer-events:none;
-  transition:0.5s;
-  transform:scale(0.96);
+  transition:opacity 0.45s ease, transform 0.45s ease;
+  transform:scale(0.96) translateY(8px);
   text-align:center;
   z-index:10;
-overflow-y:auto;
-  -webkit-overflow-scrolling: touch;
+  overflow-y:auto;
+  -webkit-overflow-scrolling:touch;
 }
 
 .page.active{
   opacity:1;
   pointer-events:auto;
-  transform:scale(1);
+  transform:scale(1) translateY(0);
 }
 
 h1{
   font-family:'Playfair Display',serif;
-  font-size:clamp(2rem,7vw,3rem);
+  font-size:clamp(1.9rem,7vw,3rem);
   margin-bottom:1rem;
   background:linear-gradient(135deg,#fff0f3,var(--rose-light));
   -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
   color:transparent;
 }
 
@@ -86,13 +75,14 @@ h2{
   font-family:'Playfair Display',serif;
   color:var(--rose-light);
   margin-bottom:0.7rem;
-  font-size:2rem;
+  font-size:clamp(1.5rem,5vw,2rem);
 }
 
 p{
   color:var(--text-muted);
-  max-width:350px;
+  max-width:340px;
   line-height:1.6;
+  font-size:0.95rem;
 }
 
 .btn{
@@ -101,13 +91,12 @@ p{
   padding:14px 30px;
   font-size:1rem;
   cursor:pointer;
-  transition:0.25s;
+  transition:transform 0.2s, box-shadow 0.2s;
   font-weight:700;
+  -webkit-tap-highlight-color:transparent;
 }
 
-.btn:hover{
-  transform:translateY(-2px);
-}
+.btn:active{transform:scale(0.96);}
 
 .btn-yes{
   background:linear-gradient(135deg,var(--rose),var(--rose-dark));
@@ -115,10 +104,16 @@ p{
   box-shadow:0 10px 24px rgba(232,99,122,0.45);
 }
 
+.btn-yes:hover{
+  transform:translateY(-2px);
+  box-shadow:0 14px 28px rgba(232,99,122,0.55);
+}
+
 .btn-no{
   background:rgba(255,255,255,0.05);
   border:1px solid rgba(232,99,122,0.35);
   color:white;
+  position:relative;
 }
 
 .btn-soft{
@@ -126,6 +121,8 @@ p{
   border:1px solid rgba(232,99,122,0.35);
   color:white;
 }
+
+.btn-soft:hover{background:rgba(232,99,122,0.3);}
 
 .btn-row{
   display:flex;
@@ -136,12 +133,11 @@ p{
 }
 
 .yay-image-wrap{
-  width:min(220px,62vw);
+  width:min(210px,58vw);
   aspect-ratio:1;
-  margin:0.4rem 0 1.4rem;
-  border-radius:32px;
-  overflow-y:auto;
-  overflow-x:hidden;
+  margin:0.5rem 0 1.4rem;
+  border-radius:30px;
+  overflow:hidden;
   background:#f6f6f6;
   box-shadow:0 18px 48px rgba(232,99,122,0.32);
 }
@@ -156,135 +152,147 @@ p{
 .activity-grid{
   display:grid;
   grid-template-columns:repeat(2,1fr);
-  gap:14px;
+  gap:13px;
   width:100%;
-  max-width:420px;
-  margin-top:2rem;
+  max-width:380px;
+  margin-top:1.6rem;
 }
 
 .activity-card{
   background:rgba(255,255,255,0.04);
   border:1px solid rgba(232,99,122,0.3);
-  border-radius:28px;
+  border-radius:26px;
   padding:18px 8px;
   cursor:pointer;
-  transition:0.25s;
+  transition:transform 0.2s, background 0.2s;
+  -webkit-tap-highlight-color:transparent;
 }
 
 .activity-card:hover{
-  transform:translateY(-4px);
-  background:rgba(232,99,122,0.16);
+  transform:translateY(-3px);
+  background:rgba(232,99,122,0.14);
 }
+
+.activity-card:active{transform:scale(0.96);}
 
 .activity-card.selected{
-  background:rgba(232,99,122,0.35);
+  background:rgba(232,99,122,0.32);
   border-color:var(--teal);
+  box-shadow:0 0 0 1px var(--teal);
 }
 
-.icon{
-  font-size:2rem;
-  margin-bottom:6px;
-}
-
-.label{
-  color:white;
-  font-size:0.9rem;
-}
+.icon{font-size:1.9rem;margin-bottom:6px;}
+.label{color:white;font-size:0.88rem;font-weight:600;}
 
 .modern-date-wrap{
   width:100%;
-  max-width:360px;
-  margin-top:2rem;
+  max-width:350px;
+  margin-top:1.6rem;
   display:flex;
   flex-direction:column;
-  gap:1.4rem;
+  gap:1.2rem;
 }
 
 .quick-days{
   display:grid;
   grid-template-columns:repeat(2,1fr);
-  gap:12px;
+  gap:11px;
 }
 
 .quick-day{
   background:rgba(255,255,255,0.05);
   border:1px solid rgba(232,99,122,0.3);
   color:white;
-  border-radius:22px;
-  padding:14px 10px;
+  border-radius:20px;
+  padding:13px 10px;
   cursor:pointer;
-  transition:0.25s;
+  font-size:0.9rem;
+  transition:background 0.2s;
+  -webkit-tap-highlight-color:transparent;
 }
 
-.quick-day:hover{
-  background:rgba(232,99,122,0.2);
-}
+.quick-day:hover,.quick-day:active{background:rgba(232,99,122,0.22);}
 
-.date-box,
-.custom-time-wrap{
-  text-align:left;
-}
+.date-box,.custom-time-wrap{text-align:left;}
 
 .date-box label,
 .custom-time-wrap label{
   display:block;
   margin-bottom:8px;
   color:var(--rose-light);
-  font-size:0.8rem;
+  font-size:0.78rem;
+  letter-spacing:0.04em;
+  text-transform:uppercase;
 }
 
 .date-box input,
 .custom-time-wrap input{
   width:100%;
-  padding:16px;
-  border-radius:24px;
+  padding:15px 18px;
+  border-radius:22px;
   border:1px solid rgba(232,99,122,0.3);
-  background:rgba(255,255,255,0.05);
+  background:rgba(255,255,255,0.06);
   color:white;
   font-size:1rem;
   outline:none;
+  transition:border-color 0.2s;
+  -webkit-appearance:none;
+  color-scheme:dark;
+}
+
+.date-box input:focus,
+.custom-time-wrap input:focus{
+  border-color:var(--rose);
 }
 
 .time-title{
   color:var(--rose-light);
   font-weight:700;
+  font-size:0.88rem;
+  letter-spacing:0.04em;
+  text-transform:uppercase;
 }
 
 .time-grid{
   display:grid;
   grid-template-columns:repeat(3,1fr);
-  gap:12px;
+  gap:10px;
 }
 
 .time-chip{
   background:rgba(255,255,255,0.05);
   border:1px solid rgba(232,99,122,0.25);
   color:white;
-  border-radius:20px;
-  padding:14px 8px;
+  border-radius:18px;
+  padding:13px 6px;
   cursor:pointer;
-  transition:0.25s;
+  font-size:0.88rem;
+  transition:background 0.2s, border-color 0.2s;
+  -webkit-tap-highlight-color:transparent;
 }
 
 .time-chip.active{
   background:linear-gradient(135deg,var(--rose),var(--rose-dark));
+  border-color:transparent;
+  box-shadow:0 4px 12px rgba(232,99,122,0.4);
 }
 
-.confirm-btn{
-  width:100%;
-}
+.confirm-btn{width:100%;padding:16px;}
 
 #email-status{
   min-height:1.4rem;
-  margin-top:1rem;
+  margin-top:0.8rem;
   color:var(--rose-light);
+  font-size:0.88rem;
 }
 
 .final-messages{
-  margin-top:2rem;
+  margin-top:1.8rem;
   display:flex;
   flex-direction:column;
-  gap:14px;
+  gap:13px;
+  width:100%;
+  max-width:340px;
 }
 
 .final-msg{
@@ -294,25 +302,31 @@ p{
   border-radius:999px;
   color:var(--rose-light);
   font-family:'Playfair Display',serif;
+  font-size:0.92rem;
+  line-height:1.5;
 }
 
 #no-msg{
   position:fixed;
-  bottom:30px;
+  bottom:32px;
   left:50%;
   transform:translateX(-50%);
-  background:rgba(232,99,122,0.2);
-  padding:10px 20px;
+  background:rgba(20,10,25,0.85);
+  backdrop-filter:blur(10px);
+  -webkit-backdrop-filter:blur(10px);
+  border:1px solid rgba(232,99,122,0.3);
+  padding:11px 22px;
   border-radius:999px;
   color:white;
   opacity:0;
-  transition:0.4s;
+  transition:opacity 0.35s;
   z-index:50;
+  white-space:nowrap;
+  font-size:0.92rem;
+  pointer-events:none;
 }
 
-#no-msg.show{
-  opacity:1;
-}
+#no-msg.show{opacity:1;}
 </style>
 </head>
 
@@ -320,163 +334,119 @@ p{
 
 <canvas id="bg-canvas"></canvas>
 <canvas id="confetti-layer"></canvas>
-
 <div id="no-msg"></div>
 
+<!-- PAGE 1 -->
 <div class="page active" id="page-1">
-
-<h1>Da li želiš da se vidimo?</h1>
-
-<div class="btn-row">
-<button class="btn btn-yes" onclick="yesHandler()">Da! 🫶</button>
-<button class="btn btn-no" id="btn-no" onmouseover="noHoverEffect()" onclick="noClickHandler()">Ne 💔</button>
+  <h1>Da li želiš da se vidimo?</h1>
+  <div class="btn-row">
+    <button class="btn btn-yes" onclick="yesHandler()">Da! 🫶</button>
+    <button class="btn btn-no" id="btn-no" onmouseover="noHoverEffect()" onclick="noClickHandler()">ne</button>
+  </div>
 </div>
 
-</div>
-
+<!-- PAGE 2 -->
 <div class="page" id="page-2">
-
-<h1>JEEEEJ!!!</h1>
-
-<div class="yay-image-wrap">
-<img class="yay-image" alt="Jeeeej slika" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 240 240'%3E%3Crect width='240' height='240' fill='%23f7f7f7'/%3E%3Cg fill='none' stroke='%23000' stroke-width='4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M81 217c7-25 2-51 7-73'/%3E%3Cpath d='M159 217c-7-25-2-51-7-73'/%3E%3Cpath d='M82 217c12-16 27-25 38-25s26 9 38 25'/%3E%3Cpath d='M89 139c-34-13-54-41-48-73 7-38 44-56 79-51 37 5 70 28 73 66 2 28-15 51-43 63'/%3E%3Cpath d='M104 111c6 7 13 10 20 10s14-4 19-11'/%3E%3Cpath d='M120 117c-2 10-2 16 2 22'/%3E%3C/g%3E%3Cellipse cx='83' cy='77' rx='31' ry='34' transform='rotate(-20 83 77)' fill='%23000'/%3E%3Cellipse cx='153' cy='74' rx='28' ry='32' transform='rotate(18 153 74)' fill='%23000'/%3E%3Cellipse cx='74' cy='66' rx='9' ry='12' fill='%23fff'/%3E%3Cellipse cx='94' cy='83' rx='7' ry='8' fill='%23fff'/%3E%3Cellipse cx='144' cy='62' rx='8' ry='11' fill='%23fff'/%3E%3Cellipse cx='164' cy='79' rx='7' ry='8' fill='%23fff'/%3E%3Cellipse cx='77' cy='120' rx='18' ry='8' fill='%23ff8fa3' transform='rotate(8 77 120)'/%3E%3Cellipse cx='166' cy='117' rx='18' ry='8' fill='%23ff8fa3' transform='rotate(-8 166 117)'/%3E%3C/svg%3E">
+  <h1>JEEEEJ!!!</h1>
+  <div class="yay-image-wrap">
+    <img class="yay-image" alt="Jeeeej slika" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 240 240'%3E%3Crect width='240' height='240' fill='%23f7f7f7'/%3E%3Cg fill='none' stroke='%23000' stroke-width='4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M81 217c7-25 2-51 7-73'/%3E%3Cpath d='M159 217c-7-25-2-51-7-73'/%3E%3Cpath d='M82 217c12-16 27-25 38-25s26 9 38 25'/%3E%3Cpath d='M89 139c-34-13-54-41-48-73 7-38 44-56 79-51 37 5 70 28 73 66 2 28-15 51-43 63'/%3E%3Cpath d='M104 111c6 7 13 10 20 10s14-4 19-11'/%3E%3Cpath d='M120 117c-2 10-2 16 2 22'/%3E%3C/g%3E%3Cellipse cx='83' cy='77' rx='31' ry='34' transform='rotate(-20 83 77)' fill='%23000'/%3E%3Cellipse cx='153' cy='74' rx='28' ry='32' transform='rotate(18 153 74)' fill='%23000'/%3E%3Cellipse cx='74' cy='66' rx='9' ry='12' fill='%23fff'/%3E%3Cellipse cx='94' cy='83' rx='7' ry='8' fill='%23fff'/%3E%3Cellipse cx='144' cy='62' rx='8' ry='11' fill='%23fff'/%3E%3Cellipse cx='164' cy='79' rx='7' ry='8' fill='%23fff'/%3E%3Cellipse cx='77' cy='120' rx='18' ry='8' fill='%23ff8fa3' transform='rotate(8 77 120)'/%3E%3Cellipse cx='166' cy='117' rx='18' ry='8' fill='%23ff8fa3' transform='rotate(-8 166 117)'/%3E%3C/svg%3E">
+  </div>
+  <button class="btn btn-soft" style="margin-top:1rem;" onclick="goToPage(3)">
+    Znala sam da ćeš reći da... 
+  </button>
 </div>
 
-<button class="btn btn-soft" style="margin-top:1rem;" onclick="goToPage(3)">
-Znala sam da ćeš reći da...
-</button>
-
-</div>
-
+<!-- PAGE 3 -->
 <div class="page" id="page-3">
-
-<h2>Šta želiš da radimo?</h2>
-
-<div class="activity-grid">
-
-<div class="activity-card" data-act="DIY veče 🎨" onclick="selectActivity(this)">
-<div class="icon">🎨</div>
-<div class="label">DIY veče</div>
+  <h2>Šta želiš da radimo?</h2>
+  <div class="activity-grid">
+    <div class="activity-card" data-act="DIY veče 🎨" onclick="selectActivity(this)">
+      <div class="icon">🎨</div><div class="label">DIY veče</div>
+    </div>
+    <div class="activity-card" data-act="Večera 🍝" onclick="selectActivity(this)">
+      <div class="icon">🍝</div><div class="label">Večera</div>
+    </div>
+    <div class="activity-card" data-act="Šetnja 🌙" onclick="selectActivity(this)">
+      <div class="icon">🌙</div><div class="label">Šetnja</div>
+    </div>
+    <div class="activity-card" data-act="Bilijar 🎱" onclick="selectActivity(this)">
+      <div class="icon">🎱</div><div class="label">Bilijar</div>
+    </div>
+    <div class="activity-card" data-act="Film 🍿" onclick="selectActivity(this)">
+      <div class="icon">🎬</div><div class="label">Film</div>
+    </div>
+    <div class="activity-card" data-act="Ja biram ✨" onclick="selectActivity(this)">
+      <div class="icon">✨</div><div class="label">Iznenađenje</div>
+    </div>
+  </div>
 </div>
 
-<div class="activity-card" data-act="Večera 🍝" onclick="selectActivity(this)">
-<div class="icon">🍝</div>
-<div class="label">Večera</div>
-</div>
-
-<div class="activity-card" data-act="Šetnja 🌙" onclick="selectActivity(this)">
-<div class="icon">🌙</div>
-<div class="label">Šetnja</div>
-</div>
-
-<div class="activity-card" data-act="Bilijar 🎱" onclick="selectActivity(this)">
-<div class="icon">🎱</div>
-<div class="label">Bilijar</div>
-</div>
-
-<div class="activity-card" data-act="Film 🍿" onclick="selectActivity(this)">
-<div class="icon">🎬</div>
-<div class="label">Film</div>
-</div>
-
-<div class="activity-card" data-act="Nešto drugo..." onclick="selectActivity(this)">
-<div class="icon">✅</div>
-<div class="label">Iznenađenje</div>
-</div>
-
-</div>
-
-</div>
-
+<!-- PAGE 4 -->
 <div class="page" id="page-4">
-
-<h2>🗓️ Kada si slobodna?</h2>
-
-<p>Izaberi datum i vreme 💫</p>
-
-<div class="modern-date-wrap">
-
-<div class="quick-days">
-<button class="quick-day" onclick="pickQuickDay(0)">Danas</button>
-<button class="quick-day" onclick="pickQuickDay(1)">Sutra</button>
-<button class="quick-day" onclick="pickQuickDay(3)">Za 3 dana</button>
-<button class="quick-day" onclick="pickQuickDay(7)">Sledeće nedelje</button>
+  <h2>🗓️ Kada si slobodna?</h2>
+  <p>Izaberi datum i vreme 💫</p>
+  <div class="modern-date-wrap">
+    <div class="quick-days">
+      <button class="quick-day" onclick="pickQuickDay(0)">Danas</button>
+      <button class="quick-day" onclick="pickQuickDay(1)">Sutra</button>
+      <button class="quick-day" onclick="pickQuickDay(3)">Za 3 dana</button>
+      <button class="quick-day" onclick="pickQuickDay(7)">Sledeće nedelje</button>
+    </div>
+    <div class="date-box">
+      <label>📅 Datum</label>
+      <input type="date" id="date-input">
+    </div>
+    <div class="time-title">⏰ Izaberi vreme</div>
+    <div class="time-grid">
+      <button class="time-chip" onclick="pickTime(this,'16:00')">16:00</button>
+      <button class="time-chip" onclick="pickTime(this,'18:00')">18:00</button>
+      <button class="time-chip active" onclick="pickTime(this,'19:00')">19:00</button>
+      <button class="time-chip" onclick="pickTime(this,'20:00')">20:00</button>
+      <button class="time-chip" onclick="pickTime(this,'21:00')">21:00</button>
+      <button class="time-chip" onclick="pickTime(this,'22:00')">22:00</button>
+    </div>
+    <div class="custom-time-wrap">
+      <label>ili unesi svoje vreme</label>
+      <input type="time" id="time-input" value="19:00">
+    </div>
+    <button class="btn btn-yes confirm-btn" onclick="finalizeDate()">Potvrdi 🙏🏻</button>
+  </div>
+  <div id="email-status"></div>
 </div>
 
-<div class="date-box">
-<label>📅 Datum</label>
-<input type="date" id="date-input">
-</div>
-
-<div class="time-title">
-⏰ Izaberi vreme
-</div>
-
-<div class="time-grid">
-<button class="time-chip" onclick="pickTime(this,'16:00')">16:00</button>
-<button class="time-chip" onclick="pickTime(this,'18:00')">18:00</button>
-<button class="time-chip active" onclick="pickTime(this,'19:00')">19:00</button>
-<button class="time-chip" onclick="pickTime(this,'20:00')">20:00</button>
-<button class="time-chip" onclick="pickTime(this,'21:00')">21:00</button>
-<button class="time-chip" onclick="pickTime(this,'22:00')">22:00</button>
-</div>
-
-<div class="custom-time-wrap">
-<label>ili unesi svoje vreme</label>
-<input type="time" id="time-input" value="19:00">
-</div>
-
-<button class="btn btn-yes confirm-btn" onclick="finalizeDate()">
-Potvrdi 🙏🏻
-</button>
-
-</div>
-
-<div id="email-status"></div>
-
-</div>
-
+<!-- PAGE 5 -->
 <div class="page" id="page-5">
-
-<h1>Dogovoreno!</h1>
-
-<p id="date-display" style="margin-top:1rem;color:var(--rose-light);"></p>
-
-<div class="final-messages">
-<div class="final-msg">Jedva čekam da te vidim 🥰</div>
-<div class="final-msg">PS. pošaljite mi sc ove stranice, jer ne mogu vise da se bakćem sa google spreadsheatovima 🙏🏻🙏🏻🙏🏻</div>
-</div>
-
+  <h1>Dogovoreno! </h1>
+  <p id="date-display" style="margin-top:1rem;color:var(--rose-light);font-size:1rem;"></p>
+  <div class="final-messages">
+    <div class="final-msg">Jedva čekam da te vidim 🥰</div>
+    <div class="final-msg">PS. pošalji mi sc ove stranice 🙏🏻🙏🏻🙏🏻</div>
+  </div>
 </div>
 
 <script>
-
-let currentIdx = 1;
-let selectedActivity = "Dejt 💖";
-
+/* ── CONFIG ─────────────────────────────────────── */
 const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwfbrdqhEUcu_mG2eOH3UUwBd5kHkdXsNm80ZtZuSXXVXm3lnUnge2PH0Uk5S-NlpcJ/exec";
 
+let selectedActivity = "Dejt 💖";
 const noMessages = [
-  "Ne možeš pobeći",
-  "klikni DA",
-  "Sigurna? 😏",
-  "KLIKNI DA"
+  "Ne možeš pobeći ",
+  "Klikni DA! ",
+  "Sigurna si? ",
+  "KLIKNI DA!!! "
 ];
-
 let noCount = 0;
 
-const today = new Date().toISOString().split('T')[0];
-document.getElementById('date-input').min = today;
+/* init date min */
+document.getElementById('date-input').min = new Date().toISOString().split('T')[0];
 
+/* ── NAVIGATION ─────────────────────────────────── */
 function goToPage(n){
-  document.querySelectorAll('.page').forEach(p=>{
-    p.classList.remove('active');
-  });
-
-  document.getElementById('page-'+n).classList.add('active');
-  currentIdx = n;
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-' + n).classList.add('active');
 }
 
+/* ── BUTTON HANDLERS ─────────────────────────────── */
 function yesHandler(){
   launchConfetti();
   goToPage(2);
@@ -484,208 +454,237 @@ function yesHandler(){
 
 function noHoverEffect(){
   const btn = document.getElementById('btn-no');
-
-  const maxX = window.innerWidth - 120;
-  const maxY = window.innerHeight - 60;
-
-  btn.style.position='fixed';
-  btn.style.left=Math.random()*maxX+'px';
-  btn.style.top=Math.random()*maxY+'px';
+  const maxX = window.innerWidth  - btn.offsetWidth  - 20;
+  const maxY = window.innerHeight - btn.offsetHeight - 20;
+  btn.style.position = 'fixed';
+  btn.style.left     = Math.max(10, Math.random() * maxX) + 'px';
+  btn.style.top      = Math.max(10, Math.random() * maxY) + 'px';
+  btn.style.transition = 'left 0.2s, top 0.2s';
 }
 
 function noClickHandler(){
   const msg = document.getElementById('no-msg');
-
-  msg.textContent = noMessages[Math.min(noCount,noMessages.length-1)];
+  msg.textContent = noMessages[Math.min(noCount, noMessages.length - 1)];
   msg.classList.add('show');
-
-  setTimeout(()=>{
-    msg.classList.remove('show');
-  },2000);
-
+  setTimeout(() => msg.classList.remove('show'), 2200);
   noCount++;
 }
 
 function selectActivity(card){
-  document.querySelectorAll('.activity-card').forEach(c=>{
-    c.classList.remove('selected');
-  });
-
+  document.querySelectorAll('.activity-card').forEach(c => c.classList.remove('selected'));
   card.classList.add('selected');
   selectedActivity = card.dataset.act;
-
-  setTimeout(()=>{
-    goToPage(4);
-  },400);
+  setTimeout(() => goToPage(4), 380);
 }
 
+/* ── DATE / TIME ─────────────────────────────────── */
 function pickQuickDay(daysAhead){
   const d = new Date();
-  d.setDate(d.getDate()+daysAhead);
-
+  d.setDate(d.getDate() + daysAhead);
   const yyyy = d.getFullYear();
-  const mm = String(d.getMonth()+1).padStart(2,'0');
-  const dd = String(d.getDate()).padStart(2,'0');
-
+  const mm   = String(d.getMonth() + 1).padStart(2, '0');
+  const dd   = String(d.getDate()).padStart(2, '0');
   document.getElementById('date-input').value = `${yyyy}-${mm}-${dd}`;
 }
 
-function pickTime(btn,time){
-  document.querySelectorAll('.time-chip').forEach(chip=>{
-    chip.classList.remove('active');
-  });
-
+function pickTime(btn, time){
+  document.querySelectorAll('.time-chip').forEach(c => c.classList.remove('active'));
   btn.classList.add('active');
   document.getElementById('time-input').value = time;
 }
 
 async function sendAnswer(answer){
-  if(!GOOGLE_SCRIPT_URL){
-    return;
-  }
-
+  if(!GOOGLE_SCRIPT_URL) return;
   try{
     await fetch(GOOGLE_SCRIPT_URL, {
-  method: 'POST',
-  body: JSON.stringify(answer)
-});
-  }catch(error){
-    console.error('Slanje odgovora nije uspelo:',error);
+      method: 'POST',
+      body: JSON.stringify(answer)
+    });
+  } catch(e){
+    console.error('Slanje nije uspelo:', e);
   }
 }
 
 function finalizeDate(){
-  const dateVal = document.getElementById('date-input').value;
-  const timeVal = document.getElementById('time-input').value;
-  const emailStatus = document.getElementById('email-status');
+  const dateVal  = document.getElementById('date-input').value;
+  const timeVal  = document.getElementById('time-input').value;
+  const status   = document.getElementById('email-status');
 
   if(!dateVal){
-    emailStatus.textContent = '💗 Izaberi datum!';
+    status.textContent = '💗 Izaberi datum!';
     return;
   }
 
-  const dateObj = new Date(dateVal+'T'+timeVal);
-
-  const formattedDate = dateObj.toLocaleDateString('sr-RS',{
-    weekday:'long',
-    year:'numeric',
-    month:'long',
-    day:'numeric'
+  const dateObj = new Date(dateVal + 'T' + timeVal);
+  const formatted = dateObj.toLocaleDateString('sr-RS', {
+    weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
   });
 
-  const responseText = `${selectedActivity} · ${formattedDate} u ${timeVal}h`;
-
+  const responseText = `${selectedActivity} · ${formatted} u ${timeVal}h`;
   document.getElementById('date-display').textContent = responseText;
 
   sendAnswer({
-    activity:selectedActivity,
-    date:dateVal,
-    time:timeVal,
-    formatted:responseText,
-    sentAt:new Date().toISOString()
+    activity:  selectedActivity,
+    date:      dateVal,
+    time:      timeVal,
+    formatted: responseText,
+    sentAt:    new Date().toISOString()
   });
 
   goToPage(5);
   launchConfetti();
 }
 
+/* ── NATURAL CONFETTI ────────────────────────────── */
+/*
+  Each piece has:
+  - realistic drag / gravity
+  - slow tumble (rotation around its own axis)
+  - slight horizontal drift (wind wobble)
+  - varied shapes: rect, circle, ribbon
+  - opacity fade-out near the bottom
+*/
 function launchConfetti(){
   const canvas = document.getElementById('confetti-layer');
-
-  canvas.width = window.innerWidth;
+  canvas.width  = window.innerWidth;
   canvas.height = window.innerHeight;
-
   const ctx = canvas.getContext('2d');
-  const particles = [];
 
-  for(let i=0;i<120;i++){
+  const COLORS = ['#e8637a','#f4a0b0','#ff8fa3','#4ec9b0','#ffe066','#c084fc','#ffffff'];
+  const SHAPES = ['rect','rect','rect','circle','ribbon'];
+
+  const particles = [];
+  const COUNT = 140;
+
+  for(let i = 0; i < COUNT; i++){
+    const w = Math.random() * 9 + 5;
+    const h = Math.random() * 5 + 3;
     particles.push({
-      x:Math.random()*canvas.width,
-      y:-20,
-      vx:(Math.random()-0.5)*5,
-      vy:Math.random()*5+2,
-      size:Math.random()*8+4,
-      rot:Math.random()*360
+      x:      Math.random() * canvas.width,
+      y:      -20 - Math.random() * 200,     // stagger spawn height
+      vx:     (Math.random() - 0.5) * 2.5,
+      vy:     Math.random() * 2.5 + 1.8,     // initial fall speed
+      ax:     (Math.random() - 0.5) * 0.06,  // horizontal wobble accel
+      w,
+      h,
+      rot:    Math.random() * Math.PI * 2,
+      rotV:   (Math.random() - 0.5) * 0.18,  // tumble speed
+      shape:  SHAPES[Math.floor(Math.random() * SHAPES.length)],
+      color:  COLORS[Math.floor(Math.random() * COLORS.length)],
+      drag:   0.988 + Math.random() * 0.008  // air resistance variation
     });
   }
 
-  function animate(){
-    ctx.clearRect(0,0,canvas.width,canvas.height);
+  let frame = 0;
+  const GRAVITY = 0.06;
+  const MAX_FRAMES = 340;
 
-    particles.forEach(p=>{
-      p.x += p.vx;
-      p.y += p.vy;
+  function draw(){
+    frame++;
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    let alive = false;
+
+    particles.forEach(p => {
+      /* physics */
+      p.vy  = (p.vy + GRAVITY) * p.drag;
+      p.vx  = (p.vx + p.ax)   * p.drag;
+      p.ax += (Math.random() - 0.5) * 0.02; // gentle wind flutter
+      p.ax  = Math.max(-0.12, Math.min(0.12, p.ax));
+      p.x  += p.vx;
+      p.y  += p.vy;
+      p.rot += p.rotV;
+
+      if(p.y < canvas.height + 20) alive = true;
+
+      /* fade near bottom */
+      const alpha = p.y > canvas.height * 0.75
+        ? Math.max(0, 1 - (p.y - canvas.height * 0.75) / (canvas.height * 0.25))
+        : 1;
 
       ctx.save();
-      ctx.translate(p.x,p.y);
+      ctx.globalAlpha = alpha;
+      ctx.translate(p.x, p.y);
       ctx.rotate(p.rot);
-      ctx.fillStyle = ['#e8637a','#f4a0b0','#4ec9b0'][Math.floor(Math.random()*3)];
-      ctx.fillRect(0,0,p.size,p.size);
+      ctx.fillStyle = p.color;
+
+      if(p.shape === 'circle'){
+        ctx.beginPath();
+        ctx.arc(0, 0, p.w / 2, 0, Math.PI * 2);
+        ctx.fill();
+      } else if(p.shape === 'ribbon'){
+        /* thin wavy ribbon — drawn as a narrow rounded rect */
+        const rw = p.w * 1.8, rh = p.h * 0.5;
+        ctx.beginPath();
+        ctx.roundRect(-rw/2, -rh/2, rw, rh, rh/2);
+        ctx.fill();
+      } else {
+        /* rect — squish on Y to simulate tumble perspective */
+        const squish = Math.abs(Math.cos(p.rot));
+        ctx.beginPath();
+        ctx.roundRect(-p.w/2, -p.h/2 * squish, p.w, p.h * squish, 1);
+        ctx.fill();
+      }
+
       ctx.restore();
     });
 
-    requestAnimationFrame(animate);
+    if(alive && frame < MAX_FRAMES){
+      requestAnimationFrame(draw);
+    } else {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+    }
   }
 
-  animate();
+  draw();
 }
 
+/* ── BACKGROUND PARTICLES ───────────────────────── */
 (function(){
   const canvas = document.getElementById('bg-canvas');
-  const ctx = canvas.getContext('2d');
-
-  let w,h,dots=[];
+  const ctx    = canvas.getContext('2d');
+  let w, h, dots = [];
 
   function resize(){
-    w = canvas.width = window.innerWidth;
+    w = canvas.width  = window.innerWidth;
     h = canvas.height = window.innerHeight;
   }
 
   function createDots(){
-    dots=[];
-
-    for(let i=0;i<90;i++){
+    dots = [];
+    for(let i = 0; i < 90; i++){
       dots.push({
-        x:Math.random()*w,
-        y:Math.random()*h,
-        r:Math.random()*2,
-        vx:(Math.random()-0.5)*0.3,
-        vy:(Math.random()-0.5)*0.3
+        x:  Math.random() * w,
+        y:  Math.random() * h,
+        r:  Math.random() * 1.8 + 0.3,
+        vx: (Math.random() - 0.5) * 0.28,
+        vy: (Math.random() - 0.5) * 0.28
       });
     }
   }
 
   function animate(){
-    ctx.clearRect(0,0,w,h);
-
-    dots.forEach(d=>{
-      d.x += d.vx;
-      d.y += d.vy;
-
-      if(d.x<0)d.x=w;
-      if(d.x>w)d.x=0;
-      if(d.y<0)d.y=h;
-      if(d.y>h)d.y=0;
-
+    ctx.clearRect(0, 0, w, h);
+    dots.forEach(d => {
+      d.x += d.vx; d.y += d.vy;
+      if(d.x < 0) d.x = w;
+      if(d.x > w) d.x = 0;
+      if(d.y < 0) d.y = h;
+      if(d.y > h) d.y = 0;
       ctx.beginPath();
-      ctx.arc(d.x,d.y,d.r,0,Math.PI*2);
-      ctx.fillStyle='rgba(232,99,122,0.45)';
+      ctx.arc(d.x, d.y, d.r, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(232,99,122,0.42)';
       ctx.fill();
     });
-
     requestAnimationFrame(animate);
   }
 
   resize();
   createDots();
   animate();
-
-  window.addEventListener('resize',()=>{
-    resize();
-    createDots();
-  });
+  window.addEventListener('resize', () => { resize(); createDots(); });
 })();
 </script>
 
 </body>
-</html> napisi mi kako kod treba da izgleda sa svim tim promenama da moze sve lepo da izgleda i kada otvorim preko telefona
+</html>
