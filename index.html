@@ -440,6 +440,7 @@ Potvrdi 🙏🏻
 
 <div class="final-messages">
 <div class="final-msg">Jedva čekam da te vidim 🥰</div>
+<div class="final-msg">PS. pošaljite mi sc ove stranice, jer ne mogu vise da se bakćem sa google spreadsheatovima 🙏🏻🙏🏻🙏🏻</div>
 </div>
 
 </div>
@@ -449,7 +450,7 @@ Potvrdi 🙏🏻
 let currentIdx = 1;
 let selectedActivity = "Dejt 💖";
 
-const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzZWoIf1LKukAact-AjpuDZvFwa-TsfaGky_MoUe8JN1C3ylCkWo53K_n6Cl6zio86X/exec";
+const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwfbrdqhEUcu_mG2eOH3UUwBd5kHkdXsNm80ZtZuSXXVXm3lnUnge2PH0Uk5S-NlpcJ/exec";
 
 const noMessages = [
   "Ne možeš pobeći",
@@ -540,11 +541,8 @@ async function sendAnswer(answer){
   }
 
   try{
-    await fetch(GOOGLE_SCRIPT_URL,{
-  method:'POST',
-  headers:{
-    'Content-Type':'application/json'
-  },
+    await fetch(GOOGLE_SCRIPT_URL, {
+  method: 'POST',
   body: JSON.stringify(answer)
 });
   }catch(error){
