@@ -449,7 +449,7 @@ Potvrdi 🙏🏻
 let currentIdx = 1;
 let selectedActivity = "Dejt 💖";
 
-const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyGXMVCOkoXp4kk9ojDDRBztomq9oE51wHpu77OF7fSZHqABlBeHDZfs2Z2SIrnLrI/exec";
+const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbw03UY9O1BnDpILFv0JbiNYpmow3XaYa3RjO2HTkjLgKZd3RC88dU_AY3L69Mx8fb1U/exec";
 
 const noMessages = [
   "Ne možeš pobeći",
@@ -541,13 +541,12 @@ async function sendAnswer(answer){
 
   try{
     await fetch(GOOGLE_SCRIPT_URL,{
-      method:'POST',
-      mode:'no-cors',
-      headers:{
-        'Content-Type':'application/json'
-      },
-      body:JSON.stringify(answer)
-    });
+  method:'POST',
+  headers:{
+    'Content-Type':'application/json'
+  },
+  body: JSON.stringify(answer)
+});
   }catch(error){
     console.error('Slanje odgovora nije uspelo:',error);
   }
